@@ -64,12 +64,10 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "tailwindcss-rails", "~> 3.3"
-
-gem "tailwindcss-ruby", "~> 3.4"
-
 gem "hotwire-rails", "~> 0.1.3"
 
 gem "importmap-rails", "~> 2.1"
 
 gem "devise", "~> 4.9"
+
+gem "heroicon", "~> 1.0"

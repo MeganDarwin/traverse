@@ -1,22 +1,18 @@
-<div id="<%= dom_id travel %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Name:</strong>
-    <%= travel.name %>
-  </p>
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Start date:</strong>
-    <%= travel.start_date %>
-  </p>
-  <p class="my-5">
-    <strong class="block font-medium mb-1">End date:</strong>
-    <%= travel.end_date %>
-  </p>
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Favorite:</strong>
-    <%= travel.favorite %>
-  </p>
-  <p class="my-5">
-    <strong class="block font-medium mb-1">User:</strong>
-    <%= travel.user_id %>
-  </p>
+<div id="<%= dom_id travel %>" class="border-solid border-2 border-gray-400 rounded-md mb-4">
+  <%= link_to travel do %>
+    <p class="text-gray-900 font-bold text-xl mb-2">
+      <%# <strong class="block font-medium mb-1">Name:</strong> %>
+      <%= travel.name %>
+    </p>
+    <p class="my-2">
+      <strong class="block font-medium mb-1">Dates Visited:</strong>
+      <%= travel.dates_traveled %>
+    </p>
+
+    <% if travel.favorite %>
+      <%= heroicon "heart", options: { class: "text-pink-400 h-4 w-4" } %>
+    <% else %>
+      <%= heroicon "heart", variant: :outline, options: { class: "h-4 w-4" } %>
+    <% end %>
+  <% end %>
 </div>

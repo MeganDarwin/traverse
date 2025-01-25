@@ -1,27 +1,26 @@
 class TravelsController < ApplicationController
-  before_action :set_travel, only: %i[ show edit update destroy ]
+  include UserScopedResources
+
+  before_action :set_travel, only: %i[show edit update destroy]
+  before_action :authenticate_user!
 
   # GET /travels or /travels.json
   def index
-    @travels = Travel.all
+    @travels = user_scoped(Travel)
   end
 
-  # GET /travels/1 or /travels/1.json
   def show
   end
 
-  # GET /travels/new
   def new
     @travel = Travel.new
   end
 
-  # GET /travels/1/edit
   def edit
   end
 
-  # POST /travels or /travels.json
   def create
-    @travel = Travel.new(travel_params)
+    @travel = Travel.new(travel_params.merge(user: current_user))
 
     respond_to do |format|
       if @travel.save
@@ -34,7 +33,6 @@ class TravelsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /travels/1 or /travels/1.json
   def update
     respond_to do |format|
       if @travel.update(travel_params)
@@ -47,7 +45,6 @@ class TravelsController < ApplicationController
     end
   end
 
-  # DELETE /travels/1 or /travels/1.json
   def destroy
     @travel.destroy!
 
@@ -58,13 +55,12 @@ class TravelsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_travel
-      @travel = Travel.find(params.expect(:id))
-    end
 
-    # Only allow a list of trusted parameters through.
-    def travel_params
-      params.expect(travel: [ :name, :start_date, :end_date, :favorite, :user_id ])
-    end
+  def set_travel
+    @travel = user_scoped(Travel).find(params[:id])
+  end
+
+  def travel_params
+    params.require(:travel).permit(:name, :start_date, :end_date, :favorite)
+  end
 end

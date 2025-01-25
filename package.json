@@ -3,6 +3,17 @@
   "private": true,
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets",
-    "build:css": "sass ./app/assets/stylesheets/application.sass.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules"
+    "build:css": "tailwindcss -i ./app/assets/stylesheets/application.tailwind.css.scss -o ./app/assets/builds/application.css --minify"
+  },
+  "dependencies": {
+    "@hotwired/stimulus": "^3.2.2",
+    "@hotwired/turbo-rails": "^8.0.12",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.1",
+    "sass": "^1.83.4",
+    "tailwindcss": "^4.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.2"
   }
 }
