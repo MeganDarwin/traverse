@@ -17,6 +17,17 @@
     <p>No images available</p>
   <% end%>
 
+  <h2 class="font-bold text-2xl mt-5">Comments</h2>
+  <div id="comments">
+    <% @travel.comments.each do |comment| %>
+      <%= render partial: "comments/comment", locals: { comment: comment } %>
+    <% end %>
+  </div>
+
+  <%= turbo_frame_tag "new_comment" do %>
+    <%= render partial: "comments/form", locals: { comment: Comment.new, commentable: @travel } %>
+  <% end %>
+
   <%= link_to "Edit this travel", edit_travel_path(@travel), class: "mt-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
   <%= link_to "Back to travels", travels_path, class: "ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
   <div class="inline-block ml-2">

@@ -1,0 +1,13 @@
+<div id="comment_<%= comment.id %>" class="mb-4">
+  <p>
+    <strong><%= comment.user.full_name %>:</strong> <%= comment.body %>
+    <br>
+    <small><%= comment.updated_at.strftime("%B %d, %Y %H:%M") %></small>
+    <% if comment.user == current_user %>
+      <%= link_to "Edit", polymorphic_path([:edit, comment.commentable, comment]), data: { turbo_frame: "comment_#{comment.id}" } %>
+    <% end %>
+    <% if comment.user == current_user || comment.commentable.user == current_user %>
+      <%= button_to "Delete", polymorphic_path([comment.commentable, comment]), method: :delete, data: { turbo_confirm: "Are you sure?" } %>
+    <% end %>
+  </p>
+</div>

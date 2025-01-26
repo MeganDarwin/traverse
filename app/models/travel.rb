@@ -1,6 +1,7 @@
 class Travel < ApplicationRecord
   belongs_to :user
   has_many_attached :images
+  has_many :comments, as: :commentable, dependent: :destroy
 
   validates :name, presence: true
   validate :start_date_before_end_date

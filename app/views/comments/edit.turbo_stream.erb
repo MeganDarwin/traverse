@@ -1,0 +1,3 @@
+<%= turbo_frame_tag "comment_#{@comment.id}" do %>
+  <%= render 'form', locals: { comment: @comment, commentable: @comment.commentable } %>
+<% end %>

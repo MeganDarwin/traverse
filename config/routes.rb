@@ -1,10 +1,14 @@
 Rails.application.routes.draw do
+  resources :comments
   resources :travels
   resource :session
   resources :passwords, param: :token
 
   root "travels#index"
-  resources :travels, only: [ :index, :show ]
+
+  resources :travels, only: [ :index, :show ] do
+    resources :comments, only: [ :create, :edit, :update, :destroy ]
+  end
 
   # devise_for :users, path: "", path_names: {
   #   sign_in: "login",

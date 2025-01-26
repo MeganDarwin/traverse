@@ -1,0 +1,12 @@
+<% content_for :title, "Editing comment" %>
+
+<h1>Editing comment</h1>
+
+<%= render partial: "form", locals: { comment: @comment, commentable: @comment.commentable } %>
+
+<br>
+
+<div>
+  <%= link_to "Show this comment", @comment %> |
+  <%= link_to "Back to comments", comments_path %>
+</div>
