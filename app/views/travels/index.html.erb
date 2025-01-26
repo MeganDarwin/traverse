@@ -11,10 +11,21 @@
     <%= link_to "New travel", new_travel_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
   </div>
 
+  <div class="tabs mb-4">
+    <ul class="flex border-b">
+      <li class="-mb-px mr-1">
+        <%= link_to 'My Travels', travels_path(scope: 'my_travels'), class: "bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-blue-700 font-semibold #{'active' if params[:scope] != 'explore'}" %>
+      </li>
+      <li class="mr-1">
+        <%= link_to 'Explore', travels_path(scope: 'explore'), class: "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold #{'active' if params[:scope] == 'explore'}" %>
+      </li>
+    </ul>
+  </div>
+
   <div id="travels" class="min-w-full">
     <% if @travels.any? %>
       <% @travels.each do |travel| %>
-        <%= render travel %>
+        <%= render partial: "travel", locals: { travel: travel } %>
       <% end %>
     <% else %>
       <p class="text-center my-10">No travels found.</p>

@@ -8,7 +8,11 @@ class TravelsController < ApplicationController
   }, only: %i[create upload_images]
 
   def index
-    @travels = user_scoped(Travel)
+    if params[:scope] == "explore"
+      @travels = Travel.where.not(user: current_user)
+    else
+      @travels = current_user.travels
+    end
   end
 
   def show
