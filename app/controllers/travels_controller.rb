@@ -1,11 +1,11 @@
 class TravelsController < ApplicationController
   include UserScopedResources
 
-  before_action :set_travel, only: %i[show edit update destroy]
+  before_action :set_travel, only: [ :show, :edit, :update, :destroy, :upload_images ]
   before_action :authenticate_user!
-    before_action lambda {
+  before_action lambda {
     resize_before_save(travel_params[:images], 300, 300)
-  }, only: %i[update create]
+  }, only: %i[create upload_images]
 
   def index
     @travels = user_scoped(Travel)
@@ -37,8 +37,7 @@ class TravelsController < ApplicationController
   end
   def update
     respond_to do |format|
-      if @travel.update(travel_params.except(:images))
-        attach_images(@travel)
+      if @travel.update(travel_params)
         format.html { redirect_to @travel, notice: "#{@travel.name} was successfully updated." }
         format.json { render :show, status: :ok, location: @travel }
       else
@@ -54,6 +53,18 @@ class TravelsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to travels_path, status: :see_other, notice: "#{@travel.name} was successfully destroyed." }
       format.json { head :no_content }
+    end
+  end
+
+  def upload_images
+    if params[:travel][:images].present?
+      attach_images(@travel)
+      respond_to do |format|
+        format.html { redirect_to @travel, notice: "Images were successfully uploaded." }
+        format.turbo_stream
+      end
+    else
+      redirect_to @travel, alert: "No images selected for upload."
     end
   end
 

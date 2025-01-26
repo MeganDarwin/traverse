@@ -9,13 +9,22 @@
 
   <%= render @travel %>
 
-  <% if @travel.images.attached? %>
-    <% @travel.images.each do |image| %>
-      <%= image_tag image, alt: "#{@travel.name} image" %>
+  <h2 class="font-bold text-2xl mt-5">Images</h2>
+    <%= render partial: "image_form" %>
+
+    <%= turbo_frame_tag "images" do %>
+      <div id="images_list">
+        <% if @travel.images.attached? %>
+          <div class="images">
+            <% @travel.images.each do |image| %>
+              <%= image_tag image, alt: "#{@travel.name} image", class: "travel-image" %>
+            <% end %>
+          </div>
+        <% else %>
+          <p>No images available</p>
+        <% end %>
+      </div>
     <% end %>
-  <% else %>
-    <p>No images available</p>
-  <% end%>
 
   <h2 class="font-bold text-2xl mt-5">Comments</h2>
   <div id="comments">

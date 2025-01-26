@@ -1,0 +1,15 @@
+<%= turbo_stream.replace "images_list" do %>
+  <% if @travel.images.attached? %>
+    <div class="images">
+      <% @travel.images.each do |image| %>
+        <%= image_tag image, alt: "#{@travel.name} image", class: "travel-image" %>
+      <% end %>
+    </div>
+  <% else %>
+    <p>No images available</p>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.replace "image_upload_form" do %>
+  <%= render partial: "image_form", locals: { travel: @travel } %>
+<% end %>

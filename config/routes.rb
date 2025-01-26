@@ -8,6 +8,10 @@ Rails.application.routes.draw do
 
   resources :travels, only: [ :index, :show ] do
     resources :comments, only: [ :create, :edit, :update, :destroy ]
+
+    member do
+      post :upload_images
+    end
   end
 
   # devise_for :users, path: "", path_names: {
