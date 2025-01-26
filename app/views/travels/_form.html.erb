@@ -31,6 +31,10 @@
     <%= form.checkbox :favorite, class: ["block shadow rounded-md border outline-none mt-2 h-5 w-5", {"border-gray-400 focus:outline-blue-600": travel.errors[:favorite].none?, "border-red-400 focus:outline-red-600": travel.errors[:favorite].any?}] %>
   </div>
 
+  <div class="my-5">
+    <%= form.label :images %>
+    <%= form.file_field :images, multiple: true, accept: 'image/png, image/gif, image/jpeg' %>  </div>
+
   <div class="inline">
     <%= form.submit class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
   </div>

@@ -9,6 +9,14 @@
 
   <%= render @travel %>
 
+  <% if @travel.images.attached? %>
+    <% @travel.images.each do |image| %>
+      <%= image_tag image, alt: "#{@travel.name} image" %>
+    <% end %>
+  <% else %>
+    <p>No images available</p>
+  <% end%>
+
   <%= link_to "Edit this travel", edit_travel_path(@travel), class: "mt-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
   <%= link_to "Back to travels", travels_path, class: "ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
   <div class="inline-block ml-2">

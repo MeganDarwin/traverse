@@ -1,9 +1,19 @@
 <div id="<%= dom_id travel %>" class="border-solid border-2 border-gray-400 rounded-md mb-4">
-  <%= link_to travel do %>
-    <p class="text-gray-900 font-bold text-xl mb-2">
-      <%# <strong class="block font-medium mb-1">Name:</strong> %>
-      <%= travel.name %>
-    </p>
+
+  <div>
+    <%if travel.images.attached?%>
+      <%= image_tag travel.images.first, alt: "#{travel.name} thumbnail" %>
+    <% else %>
+      <div>placeholder</div>
+    <% end %>
+  </div>
+
+    <%= link_to travel do %>
+      <p class="text-indigo-900 font-bold text-2xl mb-2">
+        <%= travel.name %>
+      </p>
+    <% end %>
+
     <p class="my-2">
       <strong class="block font-medium mb-1">Dates Visited:</strong>
       <%= travel.dates_traveled %>
@@ -14,5 +24,4 @@
     <% else %>
       <%= heroicon "heart", variant: :outline, options: { class: "h-4 w-4" } %>
     <% end %>
-  <% end %>
 </div>
