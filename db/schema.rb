@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_25_204211) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_26_012125) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -43,7 +43,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_25_204211) do
   end
 
   create_table "travels", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.date "start_date"
     t.date "end_date"
     t.boolean "favorite"
