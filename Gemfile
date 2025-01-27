@@ -71,3 +71,5 @@ gem "importmap-rails", "~> 2.1"
 gem "devise", "~> 4.9"
 
 gem "heroicon", "~> 1.0"
+
+gem "pundit", "~> 2.4"

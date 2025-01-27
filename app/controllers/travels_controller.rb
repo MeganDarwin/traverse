@@ -9,9 +9,9 @@ class TravelsController < ApplicationController
 
   def index
     @travels = if params[:scope] == "explore"
-                 Travel.where.not(user: current_user)
+                 policy_scope(Travel.where.not(user: current_user))
     else
-                 current_user.travels
+                 policy_scope(current_user.travels)
     end
 
     respond_to do |format|
@@ -21,17 +21,21 @@ class TravelsController < ApplicationController
   end
 
   def show
+    authorize @travel
   end
 
   def new
     @travel = Travel.new
+    authorize @travel
   end
 
   def edit
+    authorize @travel
   end
 
   def create
     @travel = Travel.new(travel_params.except(:images).merge(user: current_user))
+    authorize @travel
 
     respond_to do |format|
       if @travel.save
@@ -44,7 +48,10 @@ class TravelsController < ApplicationController
       end
     end
   end
+
   def update
+    authorize @travel
+
     respond_to do |format|
       if @travel.update(travel_params)
         format.html { redirect_to @travel, notice: "#{@travel.name} was successfully updated." }
@@ -57,15 +64,23 @@ class TravelsController < ApplicationController
   end
 
   def destroy
+    authorize @travel
     @travel.destroy!
 
     respond_to do |format|
-      format.html { redirect_to travels_path, status: :see_other, notice: "#{@travel.name} was successfully destroyed." }
-      format.json { head :no_content }
+      format.html do
+        redirect_to travels_path, notice: "#{@travel.name} was successfully destroyed."
+      end
+      format.turbo_stream do
+        @travels = policy_scope(Travel.where(user: current_user))
+        render "travels/index"
+      end
     end
   end
 
   def upload_images
+    authorize @travel
+
     if params[:travel][:images].present?
       attach_images(@travel)
       respond_to do |format|
@@ -80,10 +95,10 @@ class TravelsController < ApplicationController
   private
 
   def set_travel
-    if %w[show].include?(action_name)
+    if %w[show edit update destroy upload_images].include?(action_name)
       @travel = Travel.find(params[:id])
     else
-      @travel = current_user.travels.find(params[:id])
+      @travel = user_scoped(Travel).find(params[:id])
     end
   end
 
@@ -103,10 +118,10 @@ class TravelsController < ApplicationController
     return unless image_params.present?
     image_params.each do |image_param|
       begin
-      ImageProcessing::MiniMagick
-        .source(image_param)
-        .resize_to_fit(width, height)
-        .call(destination: image_param.tempfile.path)
+        ImageProcessing::MiniMagick
+          .source(image_param)
+          .resize_to_fit(width, height)
+          .call(destination: image_param.tempfile.path)
       rescue StandardError => e
         Rails.logger.error "Image resizing failed: #{e.message}"
       end

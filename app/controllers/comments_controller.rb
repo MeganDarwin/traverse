@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
 
   def create
     @comment = @commentable.comments.new(comment_params)
-
+    authorize @comment
     respond_to do |format|
       if @comment.save
         format.html { redirect_to @commentable, notice: "Comment was successfully created." }
@@ -19,17 +19,15 @@ class CommentsController < ApplicationController
   end
 
   def edit
+    authorize @comment
     respond_to do |format|
-      puts "*" * 100
-      puts @comment.commentable
-      puts "*" * 100
-
       format.turbo_stream { render turbo_stream: turbo_stream.replace("comment_#{@comment.id}", partial: "comments/form", locals: { comment: @comment, commentable: @comment.commentable }) }
       format.html
     end
   end
 
   def update
+    authorize @comment
     respond_to do |format|
       if @comment.update(comment_params)
         format.html { redirect_to @commentable, notice: "Comment was successfully updated." }
@@ -48,6 +46,7 @@ class CommentsController < ApplicationController
   end
 
   def destroy
+    authorize @comment
     @comment.destroy!
 
     respond_to do |format|

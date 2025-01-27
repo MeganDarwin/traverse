@@ -1,7 +1,7 @@
 <% content_for :title, "Travels" %>
 
 <div class="w-full">
-  <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class:'text-red'  %>
+  <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: 'text-red' %>
   <% if notice.present? %>
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
   <% end %>
@@ -25,9 +25,7 @@
   <%= turbo_frame_tag "travels" do %>
     <div id="travels" class="min-w-full">
       <% if @travels.any? %>
-        <% @travels.each do |travel| %>
-          <%= render partial: "travel", locals: { travel: travel } %>
-        <% end %>
+        <%= render partial: "travels/travel", collection: @travels %>
       <% else %>
         <p class="text-center my-10">No travels found.</p>
       <% end %>

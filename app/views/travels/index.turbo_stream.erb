@@ -9,3 +9,4 @@
     <% end %>
   </div>
 <% end %>
+<%= turbo_stream.append "flash", partial: "layouts/flash", locals: { notice: "#{@travel.name} was successfully destroyed." } %>
