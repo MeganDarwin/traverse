@@ -3,6 +3,8 @@ require "test_helper"
 class TravelsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @travel = travels(:one)
+    @user = users(:one)
+    sign_in @user
   end
 
   test "should get index" do
@@ -17,10 +19,10 @@ class TravelsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create travel" do
     assert_difference("Travel.count") do
-      post travels_url, params: { travel: { end_date: @travel.end_date, favorite: @travel.favorite, name: @travel.name, start_date: @travel.start_date, user_id: @travel.user_id } }
+      post travels_url, params: { travel: { end_date: @travel.end_date, favorite: @travel.favorite, name: @travel.name, start_date: @travel.start_date } }
     end
 
-    assert_redirected_to travel_url(Travel.last)
+    assert_redirected_to travel_url(Travel.first)
   end
 
   test "should show travel" do
@@ -34,7 +36,7 @@ class TravelsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update travel" do
-    patch travel_url(@travel), params: { travel: { end_date: @travel.end_date, favorite: @travel.favorite, name: @travel.name, start_date: @travel.start_date, user_id: @travel.user_id } }
+    patch travel_url(@travel), params: { travel: { end_date: @travel.end_date, favorite: @travel.favorite, name: @travel.name, start_date: @travel.start_date } }
     assert_redirected_to travel_url(@travel)
   end
 

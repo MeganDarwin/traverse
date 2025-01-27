@@ -1,8 +1,6 @@
 class CommentsController < ApplicationController
   before_action :set_commentable
   before_action :set_comment, only: [ :edit, :update, :destroy ]
-  before_action :authorize_edit!, only: [ :edit, :update ]
-  before_action :authorize_delete!, only: [ :destroy ]
 
   def create
     @comment = @commentable.comments.new(comment_params)
@@ -10,7 +8,7 @@ class CommentsController < ApplicationController
     if @comment.save
       respond_to do |format|
         format.turbo_stream
-        format.html { redirect_to @travel, notice: "Comment was successfully created." }
+        format.html { redirect_to @comment.commentable, notice: "Comment was successfully created." }
       end
     else
       respond_to do |format|
@@ -42,8 +40,7 @@ class CommentsController < ApplicationController
 
   def destroy
     authorize @comment
-    @comment.destroy!
-
+    @comment.destroy
     respond_to do |format|
       format.html { redirect_to @commentable, status: :see_other, notice: "Comment was successfully destroyed." }
       format.turbo_stream { render turbo_stream: turbo_stream.remove("comment_#{@comment.id}") }
@@ -64,18 +61,6 @@ class CommentsController < ApplicationController
 
   def set_comment
     @comment = Comment.find(params[:id])
-  end
-
-  def authorize_edit!
-    unless @comment.user == current_user
-      redirect_back(fallback_location: root_path, alert: "You are not authorized to edit this comment.")
-    end
-  end
-
-  def authorize_delete!
-    unless @comment.user == current_user || @commentable.user == current_user
-      redirect_back(fallback_location: root_path, alert: "You are not authorized to delete this comment.")
-    end
   end
 
   def comment_params

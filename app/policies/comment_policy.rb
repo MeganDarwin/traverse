@@ -14,15 +14,19 @@ class CommentPolicy < ApplicationPolicy
     attr_reader :user, :scope
   end
 
+  def show?
+    user.present?
+  end
+
   def create?
     user.present?
   end
 
   def update?
-    user.present? && record.user == user
+    user.present? && (record.user == user || record.commentable.user == user)
   end
 
   def destroy?
-    user.present? && record.user == user
+    user.present? && (record.user == user || record.commentable.user == user)
   end
 end

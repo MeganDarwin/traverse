@@ -1,18 +1,36 @@
-require 'test_helper'
+class TravelPolicy < ApplicationPolicy
+  class Scope
+    def initialize(user, scope)
+      @user = user
+      @scope = scope
+    end
 
-class TravelPolicyTest < ActiveSupport::TestCase
-  def test_scope
+    def resolve
+      scope.all
+    end
+
+    private
+
+    attr_reader :user, :scope
   end
 
-  def test_show
+  def show?
+    user.present?
   end
 
-  def test_create
+  def create?
+    user.present?
   end
 
-  def test_update
+  def update?
+    user.present? && record.user == user
   end
 
-  def test_destroy
+  def destroy?
+    user.present? && record.user == user
+  end
+
+  def upload_images?
+    user.present? && record.user == user
   end
 end

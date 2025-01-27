@@ -15,7 +15,7 @@ class TravelPolicy < ApplicationPolicy
   end
 
   def show?
-    true
+    user.present?
   end
 
   def create?
