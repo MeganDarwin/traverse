@@ -7,40 +7,35 @@ class CommentsController < ApplicationController
   def create
     @comment = @commentable.comments.new(comment_params)
     authorize @comment
-    respond_to do |format|
-      if @comment.save
-        format.html { redirect_to @commentable, notice: "Comment was successfully created." }
+    if @comment.save
+      respond_to do |format|
         format.turbo_stream
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.turbo_stream
+        format.html { redirect_to @travel, notice: "Comment was successfully created." }
+      end
+    else
+      respond_to do |format|
+        format.html { render :new }
+        format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
-    authorize @comment
     respond_to do |format|
-      format.turbo_stream { render turbo_stream: turbo_stream.replace("comment_#{@comment.id}", partial: "comments/form", locals: { comment: @comment, commentable: @comment.commentable }) }
+      format.turbo_stream
       format.html
     end
   end
 
   def update
-    authorize @comment
-    respond_to do |format|
-      if @comment.update(comment_params)
-        format.html { redirect_to @commentable, notice: "Comment was successfully updated." }
-        format.turbo_stream {
-          render turbo_stream: turbo_stream.replace("comment_#{@comment.id}", partial: "comments/comment", locals: {
-            comment: @comment,
-            edit_path: polymorphic_path([ :edit, @comment.commentable, @comment ]),
-            delete_path: polymorphic_path([ @comment.commentable, @comment ])
-          })
-        }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.turbo_stream { render turbo_stream: turbo_stream.replace("comment_#{@comment.id}", partial: "comments/form", locals: { comment: @comment }) }
+    if @comment.update(comment_params)
+      respond_to do |format|
+        format.html { redirect_to @comment.commentable, notice: "Comment was successfully updated." }
+      end
+    else
+      respond_to do |format|
+        format.html { render :edit }
+        format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
   end

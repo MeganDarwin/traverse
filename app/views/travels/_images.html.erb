@@ -1,0 +1,13 @@
+<div id="images_list">
+  <% if images.present? && images.any? %>
+    <div class="images flex flex-wrap -m-2">
+      <% images.each do |image| %>
+        <div class="p-2 w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/6">
+          <%= image_tag image, alt: "#{travel.name} image", class: "travel-image w-full h-auto rounded-lg shadow-md" %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p>No images available</p>
+  <% end %>
+</div>

@@ -6,6 +6,7 @@ class Travel < ApplicationRecord
   validates :name, presence: true
   validate :start_date_before_end_date
 
+  default_scope { order(created_at: :desc) }
   scope :for_user, ->(user) { where(user: user) }
 
   def dates_traveled

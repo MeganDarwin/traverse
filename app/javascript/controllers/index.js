@@ -5,7 +5,9 @@
 import { application } from "./application"
 import HelloController from "./hello_controller"
 import ImageUploadController from "./image_upload_controller"
+import CommentFormController from "./comment_form_controller"
 
 application.register("hello", HelloController)
 application.register("image-upload", ImageUploadController)
+application.register("comment-form", CommentFormController)
 

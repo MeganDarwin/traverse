@@ -13,7 +13,6 @@ class TravelsController < ApplicationController
     else
                  policy_scope(current_user.travels)
     end
-
     respond_to do |format|
       format.html
       format.turbo_stream
@@ -22,6 +21,7 @@ class TravelsController < ApplicationController
 
   def show
     authorize @travel
+    @images = @travel.images.order(created_at: :desc)
   end
 
   def new
@@ -83,6 +83,7 @@ class TravelsController < ApplicationController
 
     if params[:travel][:images].present?
       attach_images(@travel)
+      @images = @travel.images.order(created_at: :desc)
       respond_to do |format|
         format.html { redirect_to @travel, notice: "Images were successfully uploaded." }
         format.turbo_stream

@@ -1,11 +1,13 @@
 <% content_for :title, "Editing travel" %>
 
 <div class="md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">Editing travel</h1>
-  <%= link_to "Back to travels", travels_path, class: "btn-secondary" %>
+  <div class="flex justify-between items-center mb-4">
+    <h1 class="heading mb-4">Editing travel</h1>
+    <%= link_to "Back to travels", travels_path, class: "btn-secondary" %>
+  </div>
 
 
   <%= render "form", travel: @travel %>
 
-  <%= link_to "Show this travel", @travel, class: "ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+  <%= link_to "Show this travel", @travel, class: "btn-secondary" %>
 </div>

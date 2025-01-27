@@ -1,13 +1,15 @@
-<div id="comment_<%= comment.id %>" class="mb-4">
-  <p>
-    <strong><%= comment.user.full_name %>:</strong> <%= comment.body %>
-    <br>
-    <small><%= comment.updated_at.strftime("%B %d, %Y %H:%M") %></small>
+<div id="comment_<%= comment.id %>" class="mb-4 p-2 flex flex-row bg-white border border-gray-200 rounded-lg shadow-sm dark:border-gray-700 space-between">
+  <div class="flex flex-col grow">
+    <p><%= comment.body %></p>
+    <small class="text-gray-600 dark:text-gray-400 ml-auto italic mt-2">
+      <%= "Left by #{comment.user.full_name} on #{comment.updated_at.strftime("%B %d, %Y %H:%M")}" %>
+    </small>
+  </div>
+  <div class="flex flex-row flex flex-nowrap ml-4 items-center">
     <% if comment.user == current_user %>
-      <%= link_to "Edit", polymorphic_path([:edit, comment.commentable, comment]), data: { turbo_frame: "comment_#{comment.id}" } %>
-    <% end %>
+      <%= link_to "Edit", edit_polymorphic_path([comment.commentable, comment]), class: "btn-primary mr-4", data: { turbo: false } %>    <% end %>
     <% if comment.user == current_user || comment.commentable.user == current_user %>
-      <%= button_to "Delete", polymorphic_path([comment.commentable, comment]), method: :delete, data: { turbo_confirm: "Are you sure?" } %>
+      <%= button_to "Delete", polymorphic_path([comment.commentable, comment]), method: :delete, data: { turbo_confirm: "Are you sure?"}, class: "btn-danger" %>
     <% end %>
-  </p>
+  </div>
 </div>

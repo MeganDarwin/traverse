@@ -1,12 +1,8 @@
-<% content_for :title, "Editing comment" %>
-
-<h1>Editing comment</h1>
-
-<%= render partial: "form", locals: { comment: @comment, commentable: @comment.commentable } %>
-
-<br>
-
-<div>
-  <%= link_to "Show this comment", @comment %> |
-  <%= link_to "Back to comments", comments_path %>
+<% content_for :title, "Editing Comment for #{@comment.commentable.name}" %>
+<div class="w-full">
+  <div class="flex justify-between items-center">
+    <h1 class="heading">Editing Comment for <%= @comment.commentable.name %></h1>
+    <%= link_to "Back to Travel: #{@comment.commentable.name}", @comment.commentable, class: "btn-secondary" %>
+  </div>
+  <%= render partial: "form", locals: { comment: @comment, commentable: @comment.commentable } %>
 </div>

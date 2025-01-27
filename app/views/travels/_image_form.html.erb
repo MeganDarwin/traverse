@@ -1,16 +1,12 @@
 <div id="image_upload_form">
-  <%= form_with(model: @travel, url: upload_images_travel_path(@travel), method: :post, local: true, html: { multipart: true, data: { controller: "image-upload", action: "turbo:submit-end->image-upload#clearInput" } }) do |form| %>
+  <%= form_with(model: @travel, url: upload_images_travel_path(@travel), method: :post, local: true, html: { multipart: true, data: { controller: "image-upload", action: "turbo:submit-end->image-upload#clearInput" } }, class: "flex flex-col") do |form| %>
     <div class="my-5">
-      <%= form.label :images, "Add Images" %>
-      <%= form.file_field :images, multiple: true, accept: 'image/png, image/gif, image/jpeg', data: { image_upload_target: "input", action: "change->image-upload#toggleButton" } %>
+      <%= form.label :images, "Add Images", class: "subheading" %>
+      <%= form.file_field :images, multiple: true, accept: 'image/png, image/gif, image/jpeg', data: { image_upload_target: "input", action: "change->image-upload#toggleButton" },class: "mt-2" %>
     </div>
     <div>
-      <div class="inline">
-          <%= form.submit "Upload Images",
-              class: "rounded-md px-3.5 py-2.5 bg-gray-400 cursor-not-allowed text-white inline-block font-medium",
-              data: { image_upload_target: "button" },
-              disabled: true
-          %>
+      <div class="flex">
+          <%= form.submit "Upload", class: "btn-primary ml-auto", data: { image_upload_target: "button" }, disabled: true %>
       </div>
     </div>
   <% end %>
