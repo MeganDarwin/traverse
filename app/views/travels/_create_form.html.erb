@@ -1,0 +1,25 @@
+<%= form_with(model: @travel, local: true, html: { multipart: true }) do |form| %>
+  <div class="my-5">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: "rounded-md px-3.5 py-2.5 border border-gray-300 w-full" %>
+  </div>
+  <div class="my-5">
+    <%= form.label :start_date %>
+    <%= form.date_field :start_date, class: "rounded-md px-3.5 py-2.5 border border-gray-300 w-full" %>
+  </div>
+  <div class="my-5">
+    <%= form.label :end_date %>
+    <%= form.date_field :end_date, class: "rounded-md px-3.5 py-2.5 border border-gray-300 w-full" %>
+  </div>
+  <div class="my-5">
+    <%= form.label :favorite %>
+    <%= form.check_box :favorite, class: "rounded-md px-3.5 py-2.5 border border-gray-300" %>
+  </div>
+  <div class="my-5">
+    <%= form.label :images, "Add Images" %>
+    <%= form.file_field :images, multiple: true, accept: 'image/png, image/gif, image/jpeg', data: { image_upload_target: "input", action: "change->image-upload#toggleButton" } %>
+  </div>
+  <div>
+    <%= form.submit "Create Travel", class: "btn-primary" %>
+  </div>
+<% end %>

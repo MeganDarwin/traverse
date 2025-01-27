@@ -1,0 +1,44 @@
+<div class="w-full">
+  <div class="flex justify-between items-center mb-4">
+    <h1 class="font-bold heading">Viewing Travel: <%= @travel.name %></h1>
+    <%= link_to "Back to travels", travels_path, class: "btn-secondary" %>
+  </div>
+
+  <div id="<%= dom_id @travel %>" class="relative">
+    <%= render partial: "travels/travel_card_content", locals: { travel: @travel } %>
+  </div>
+
+  <% if @travel.user == current_user %>
+    <div class="w-1/2 mb-6">
+      <%= render partial: "image_form" %>
+    </div>
+  <% end %>
+
+  <h2 class="subheading mt-5">Images</h2>
+  <%= turbo_frame_tag "images" do %>
+    <%= render partial: "travels/images", locals: { images: @images, travel: @travel } %>
+  <% end %>
+
+
+  <h2 class="subheading mt-5">Add a new Comment</h2>
+  <div class="w-1/2 mb-6">
+    <%= turbo_frame_tag "new_comment" do %>
+      <%= render partial: "comments/form", locals: { comment: Comment.new, commentable: @travel } %>
+    <% end %>
+  </div>
+
+  <h2 class="subheading mt-5">Comments</h2>
+  <%= turbo_frame_tag "comments" do %>
+    <% @travel.comments.each do |comment| %>
+      <%= render partial: "comments/comment", locals: { comment: comment } %>
+    <% end %>
+  <% end %>
+
+
+  <% if @travel.user == current_user %>
+    <div class="inline-block ml-2 flex justify-end mt-8 pb-4">
+      <%= link_to "Edit this travel", edit_travel_path(@travel), class: "btn-primary mr-4" %>
+      <%= button_to "Destroy this travel", @travel, method: :delete, data: { turbo: false, confirm: "Are you sure?" }, class: "btn-danger" %>
+    </div>
+  <% end %>
+</div>

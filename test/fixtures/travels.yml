@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: "Trip to Iceland"
+  start_date: 2023-01-01
+  end_date: 2023-01-10
+  favorite: true
+  user: one
+  created_at: <%= 1.day.ago %>
+  updated_at: <%= 1.day.ago %>
+
+two:
+  name: "Vacation in Hawaii"
+  start_date: 2023-02-15
+  end_date: 2023-02-25
+  favorite: false
+  user: two
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>

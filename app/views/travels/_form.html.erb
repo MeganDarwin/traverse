@@ -1,0 +1,37 @@
+<%= form_with(model: travel, class: "contents") do |form| %>
+  <% if travel.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
+      <h2><%= pluralize(travel.errors.count, "error") %> prohibited this travel from being saved:</h2>
+
+      <ul class="list-disc ml-6">
+        <% travel.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="my-5">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: ["block shadow rounded-md border outline-none px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": travel.errors[:name].none?, "border-red-400 focus:outline-red-600": travel.errors[:name].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :start_date %>
+    <%= form.date_field :start_date, class: ["block shadow rounded-md border outline-none px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": travel.errors[:start_date].none?, "border-red-400 focus:outline-red-600": travel.errors[:start_date].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :end_date %>
+    <%= form.date_field :end_date, class: ["block shadow rounded-md border outline-none px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": travel.errors[:end_date].none?, "border-red-400 focus:outline-red-600": travel.errors[:end_date].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :favorite %>
+    <%= form.checkbox :favorite, class: ["block shadow rounded-md border outline-none mt-2 h-5 w-5", {"border-gray-400 focus:outline-blue-600": travel.errors[:favorite].none?, "border-red-400 focus:outline-red-600": travel.errors[:favorite].any?}] %>
+  </div>
+
+  <div class="inline">
+    <%= form.submit class: "btn-primary" %>
+  </div>
+<% end %>

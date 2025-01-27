@@ -1,0 +1,7 @@
+<%= turbo_stream.replace "images_list" do %>
+  <%= render partial: "travels/images", locals: { images: @images, travel: @travel } %>
+<% end %>
+
+<%= turbo_stream.replace "image_upload_form" do %>
+  <%= render partial: "image_form", locals: { travel: @travel } %>
+<% end %>

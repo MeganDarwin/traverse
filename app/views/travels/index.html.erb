@@ -1,0 +1,29 @@
+<% content_for :title, "Travels" %>
+
+<div class="w-full">
+  <div class="flex justify-between items-center">
+    <h1 class="heading mb-2">Travels</h1>
+    <%= link_to "New travel", new_travel_path, class: "btn-primary" %>
+  </div>
+
+  <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-styled-tab" data-tabs-toggle="#default-styled-tab-content" data-tabs-active-classes="text-indigo-600 hover:text-indigo-600 dark:text-indigo-500 dark:hover:text-indigo-500 border-indigo-600 dark:border-indigo-500" data-tabs-inactive-classes="dark:border-transparent text-gray-500 hover:text-gray-600 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300" role="tablist">
+      <li class="me-2" role="presentation">
+        <%= link_to 'My Travels', travels_path(scope: 'my_travels'), class: "font-medium text-xl inline-block p-4 border-b-2 rounded-t-lg #{'text-indigo-600 border-indigo-600' if params[:scope] != 'explore'}" %>
+      </li>
+      <li class="me-2" role="presentation">
+        <%= link_to 'Explore', travels_path(scope: 'explore'), class: "font-medium text-xl inline-block p-4 border-b-2 rounded-t-lg #{'text-indigo-600 border-indigo-600' if params[:scope] == 'explore'}" %>
+      </li>
+    </ul>
+  </div>
+
+  <%= turbo_frame_tag "travels" do %>
+    <div id="travels" class="min-w-full">
+      <% if @travels.any? %>
+        <%= render partial: "travels/travel", collection: @travels %>
+      <% else %>
+        <p class="text-center my-10">No travels found.</p>
+      <% end %>
+    </div>
+  <% end %>
+</div>
