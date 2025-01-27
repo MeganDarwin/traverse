@@ -1,0 +1,11 @@
+<%= turbo_stream.replace "travels" do %>
+  <div id="travels" class="min-w-full">
+    <% if @travels.any? %>
+      <% @travels.each do |travel| %>
+        <%= render partial: "travel", locals: { travel: travel } %>
+      <% end %>
+    <% else %>
+      <p class="text-center my-10">No travels found.</p>
+    <% end %>
+  </div>
+<% end %>
