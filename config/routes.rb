@@ -2,7 +2,6 @@ Rails.application.routes.draw do
   resources :comments
   resources :travels
   resource :session
-  resources :passwords, param: :token
 
   root "travels#index"
 
@@ -14,11 +13,6 @@ Rails.application.routes.draw do
     end
   end
 
-  # devise_for :users, path: "", path_names: {
-  #   sign_in: "login",
-  #   sign_out: "logout",
-  #   sign_up: "register"
-  # }
   devise_for :users
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

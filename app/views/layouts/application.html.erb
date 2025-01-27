@@ -19,6 +19,7 @@
   </head>
 
   <body>
+    <%= render "shared/header", username: user_signed_in? ? current_user.full_name : nil %>
     <main class="container mx-auto mt-28 px-5 flex flex-col w-full justify-center">
       <% if notice %>
         <div class="notice alert bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mx-auto" role="alert"><%= notice %></div>

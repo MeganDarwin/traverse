@@ -1,23 +1,18 @@
 <% content_for :title, "Travels" %>
 
 <div class="w-full">
-  <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: 'text-red' %>
-  <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
-  <% end %>
-
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-4xl">Travels</h1>
-    <%= link_to "New travel", new_travel_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
+    <%= link_to "New travel", new_travel_path, class: "btn-primary" %>
   </div>
 
-  <div class="tabs mb-4">
-    <ul class="flex border-b">
-      <li class="-mb-px mr-1">
-        <%= link_to 'My Travels', travels_path(scope: 'my_travels'), class: "bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-blue-700 font-semibold #{'active' if params[:scope] != 'explore'}" %>
+  <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-styled-tab" data-tabs-toggle="#default-styled-tab-content" data-tabs-active-classes="text-purple-600 hover:text-purple-600 dark:text-purple-500 dark:hover:text-purple-500 border-purple-600 dark:border-purple-500" data-tabs-inactive-classes="dark:border-transparent text-gray-500 hover:text-gray-600 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300" role="tablist">
+      <li class="me-2" role="presentation">
+        <%= link_to 'My Travels', travels_path(scope: 'my_travels'), class: "inline-block p-4 border-b-2 rounded-t-lg #{'text-purple-600 border-purple-600' if params[:scope] != 'explore'}" %>
       </li>
-      <li class="mr-1">
-        <%= link_to 'Explore', travels_path(scope: 'explore'), class: "bg-white inline-block py-2 px-4 text-blue-500 hover:text-blue-800 font-semibold #{'active' if params[:scope] == 'explore'}" %>
+      <li class="me-2" role="presentation">
+        <%= link_to 'Explore', travels_path(scope: 'explore'), class: "inline-block p-4 border-b-2 rounded-t-lg #{'text-purple-600 border-purple-600' if params[:scope] == 'explore'}" %>
       </li>
     </ul>
   </div>

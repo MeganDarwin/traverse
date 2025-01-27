@@ -1,27 +1,29 @@
-<div id="<%= dom_id travel %>" class="border-solid border-2 border-gray-400 rounded-md mb-4">
-
-  <div>
-    <%if travel.images.attached?%>
-      <%= image_tag travel.images.first, alt: "#{travel.name} thumbnail" %>
-    <% else %>
-      <div>placeholder</div>
-    <% end %>
-  </div>
-
-    <%= link_to travel_path(travel), data: { turbo_frame: "_top" } do %>
-      <p class="text-indigo-900 font-bold text-2xl mb-2">
-        <%= travel.name %>
-      </p>
-    <% end %>
-
-    <p class="my-2">
-      <strong class="block font-medium mb-1">Dates Visited:</strong>
-      <%= travel.dates_traveled %>
-    </p>
-
-    <% if travel.favorite %>
-      <%= heroicon "heart", options: { class: "text-pink-400 h-4 w-4" } %>
-    <% else %>
-      <%= heroicon "heart", variant: :outline, options: { class: "h-4 w-4" } %>
-    <% end %>
+<div id="<%= dom_id travel %>">
+  <%= link_to travel_path(travel), data: { turbo_frame: "_top" } do %>
+    <div class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow-md md:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 mb-6">
+      <% if travel.images.attached? %>
+        <%= image_tag travel.images.first, alt: "#{travel.name} thumbnail", class: "object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" %>
+      <% else %>
+        <div class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg">
+            <%= image_tag "no_image_available.jpg", alt: "No Image Placeholder" %>
+        </div>
+      <% end %>
+      <div class="flex flex-col justify-between p-4 leading-normal">
+        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+          <%= travel.name %>
+        </h5>
+        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+          <strong class="block font-medium mb-1">Dates Visited:</strong>
+          <%= travel.dates_traveled %>
+        </p>
+      </div>
+      <% if travel.favorite %>
+        <%= heroicon "heart", options: { class: "text-pink-400 h-4 w-4" } %>
+      <% else %>
+        <%= heroicon "heart", variant: :outline, options: { class: "h-4 w-4" } %>
+      <% end %>
+    </div>
+  <% end %>
 </div>
+
+

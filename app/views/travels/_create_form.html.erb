@@ -20,6 +20,6 @@
     <%= form.file_field :images, multiple: true, accept: 'image/png, image/gif, image/jpeg', data: { image_upload_target: "input", action: "change->image-upload#toggleButton" } %>
   </div>
   <div>
-    <%= form.submit "Create Travel", class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium" %>
+    <%= form.submit "Create Travel", class: "btn-primary" %>
   </div>
 <% end %>
