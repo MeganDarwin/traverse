@@ -74,4 +74,4 @@ gem "heroicon", "~> 1.0"
 
 gem "pundit", "~> 2.4"
 
-gem "tailwindcss-rails", "~> 3.3"
+gem "tailwindcss-rails", "~> 4.0"
